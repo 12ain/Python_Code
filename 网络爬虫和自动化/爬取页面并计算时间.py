@@ -2,7 +2,7 @@ import requests
 import time
 
 
-def getHTMLText(url):
+def getHTML(url):
 	try:
 		r = requests.get(url, timeout=30)
 		r.raise_for_status()
@@ -12,11 +12,11 @@ def getHTMLText(url):
 		return ""
 
 
-url = "http://www.baidu.com"
+url = "localhost"
 totaltime = 0
 for i in range(100):
 	starttime = time.perf_counter()
-	getHTMLText(url)
+	getHTML(url)
 	endtime = time.perf_counter()
 	totaltime = totaltime + endtime - starttime
 print("爬取100次用了{}秒".format(totaltime))
