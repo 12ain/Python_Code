@@ -27,15 +27,29 @@ def fillUnivList(soup):
 		allUniv.append(singleUniv)
 
 
-def main(num):
-	url = 'http://124.117.250.18/ptjh/y_jhqr/g_gbjhyxjh.php?yzdm=01&pcdm=2&yxdh=1052&yxmc=1052上海海关学院'
-	html = getHTMLText(url)
-	soup = BeautifulSoup(html, "html.parser")
-	fillUnivList(soup)
-	# ls = re.findall()replace( / (^ \s *) | (\s * $) / g, "")
-	print(allUniv)
+def getUrl():
+	url1 = 'http://124.117.250.18/ptjh/y_jhqr/g_leftframe.php?yzdm=01&pcdm=1'  # 一本院校列表
+	url2 = 'http://124.117.250.18/ptjh/y_jhqr/g_leftframe.php?yzdm=01&pcdm=2'  # 二本院校列表
+	url3 = 'http://124.117.250.18/ptjh/y_jhqr/g_leftframe.php?yzdm=01&pcdm=5'  # 高职(专科)列表
+	front = 'http://124.117.250.18/ptjh/y_jhqr/'
+	urlList = []
+	urlText = getHTMLText(url3)  # 选择抓取的批次
+	soupp = BeautifulSoup(urlText, "html.parser")
+	for urldata in soupp.find_all('a'):
+		urlList.append(front + urldata['href'])
+	print(urlList)
+
+
+getUrl()
+# def main(num):
+# 	url = 'http://124.117.250.18/ptjh/y_jhqr/g_gbjhyxjh.php?yzdm=01&pcdm=2&yxdh=1052&yxmc=1052上海海关学院'
+# 	html = getHTMLText(url)
+# 	soup = BeautifulSoup(html, "html.parser")
+# 	fillUnivList(soup)
+# 	# ls = re.findall()replace( / (^ \s *) | (\s * $) / g, "")
+# 	print(allUniv)
 
 
 # printUnivList(num)
 
-main(10)
+# main(10)
