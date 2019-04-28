@@ -1,6 +1,8 @@
 import requests
 import re
 from bs4 import BeautifulSoup
+import numpy as np
+
 
 allUniv = []
 
@@ -25,7 +27,7 @@ def getUrl():
 	soupp = BeautifulSoup(urlText, "html.parser")
 	for urldata in soupp.find_all('a'):
 		urlList.append(front + urldata['href'])
-	print(urlList)
+	return urlList
 
 
 def fillUnivList(soup):
@@ -37,14 +39,18 @@ def fillUnivList(soup):
 		singleUniv = []
 		for td in ltd:
 			singleUniv.append(td.string)
+		# for i in range(len(singleUniv)):
+
 		allUniv.append(singleUniv)
 
 
-# getUrl()
-
 
 def main(num):
-	url = 'http://124.117.250.18/ptjh/y_jhqr/g_gbjhyxjh.php?yzdm=01&pcdm=2&yxdh=1052&yxmc=1052上海海关学院'
+	urlList = getUrl()
+	# for i in range(len(urlList)):
+	# 	url = urlList[i]
+	# 	print(urlList[i])
+	url = urlList[0]
 	html = getHTMLText(url)
 	soup = BeautifulSoup(html, "html.parser")
 	fillUnivList(soup)
