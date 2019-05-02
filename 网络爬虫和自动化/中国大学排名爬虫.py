@@ -30,6 +30,7 @@ def printUnivList(num):
 	print("{:^4}{:^10}{:^5}{:^8}{:^10}".format("排名", "学校名称", "省市", "总分", "培养规模"))
 	for i in range(num):
 		u = allUniv[i]
+		print(u)
 		print("{:^4}{:^10}{:^5}{:^8}{:^10}".format(u[0], u[1], u[2], u[3], u[6]))
 
 

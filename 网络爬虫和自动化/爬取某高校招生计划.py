@@ -39,13 +39,29 @@ def fillUnivList(soup):
 		singleUniv = []
 		for td in ltd:
 			singleUniv.append(td.string)
-		# for i in range(len(singleUniv)):
-
+		# print(type(singleUniv))
+		for i in range(len(singleUniv)):
+			if singleUniv[i] is not None:
+				singleUniv[i] = singleUniv[i].strip()
+			# singleUniv[i].replace(' ', '')
+		# print(singleUniv)
 		allUniv.append(singleUniv)
 
 
+def printUnivList():
+	print("{:^3}{:^10}{:^5}{:^8}{:^10}{:^12}{:^14}{:^16}".format('科类', '专业名称', '学制', '收费标准', '计划数', '计划性质及类别', '备注',
+	                                                             '类别'))
+	allUniv.pop(0)
+	allUniv.pop(-1)
+	allUniv.pop(0)
+	allUniv.pop(0)
+	for i in range(len(allUniv)):
+		u = allUniv[i]
+		print(u)
+	# print("{:^3}{:^10}{:^5}{:^8}{:^10}{:^12}{:^14}{:^16}".format(u[0], u[1], u[2], u[3], u[4], u[5], u[6], u[7]))
 
-def main(num):
+
+def main():
 	urlList = getUrl()
 	# for i in range(len(urlList)):
 	# 	url = urlList[i]
@@ -54,7 +70,7 @@ def main(num):
 	html = getHTMLText(url)
 	soup = BeautifulSoup(html, "html.parser")
 	fillUnivList(soup)
-	print(allUniv)
+	printUnivList()
 
 
-main(10)
+main()
