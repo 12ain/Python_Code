@@ -43,34 +43,48 @@ def fillUnivList(soup):
 		for i in range(len(singleUniv)):
 			if singleUniv[i] is not None:
 				singleUniv[i] = singleUniv[i].strip()
+			else:
+				singleUniv[i] = ''
 			# singleUniv[i].replace(' ', '')
 		# print(singleUniv)
 		allUniv.append(singleUniv)
 
 
 def printUnivList():
-	print("{:^3}{:^10}{:^5}{:^8}{:^10}{:^12}{:^14}{:^16}".format('科类', '专业名称', '学制', '收费标准', '计划数', '计划性质及类别', '备注',
-	                                                             '类别'))
+	# print("{:^3}{:^10}{:^5}{:^8}{:^10}{:^12}{:^14}{:^16}".format('科类', '专业名称', '学制', '收费标准', '计划数', '计划性质及类别', '备注', '类别'))
 	allUniv.pop(0)
 	allUniv.pop(-1)
 	allUniv.pop(0)
 	allUniv.pop(0)
-	for i in range(len(allUniv)):
-		u = allUniv[i]
-		print(u)
-	# print("{:^3}{:^10}{:^5}{:^8}{:^10}{:^12}{:^14}{:^16}".format(u[0], u[1], u[2], u[3], u[4], u[5], u[6], u[7]))
+	return allUniv
+	# for i in range(len(allUniv)):
+		# u = allUniv[i]
+		# print("{:^3}{:^10}{:^5}{:^8}{:^10}{:^12}{:^14}{:^16}".format(u[0], u[1], u[2], u[3], u[4], u[5], u[6], u[7]))
 
+
+def outputUnivList():
+	allUniv = printUnivList()
+	output = open('data.xls', 'a', encoding='gbk')
+	# output.write('科类\t专业名称\t学制\t收费标准\t计划数\t计划性质及类别\t备注\t类别\n')
+	for i in range(len(allUniv)):
+		for j in range(len(allUniv[i])):
+			output.write(str(allUniv[i][j]))  # write函数不能写int类型的参数，所以使用str()转化
+			output.write('\t')  # 相当于Tab一下，换一个单元格
+		output.write('\n')  # 写完一行立马换行
+	output.close()
 
 def main():
 	urlList = getUrl()
 	# for i in range(len(urlList)):
-	# 	url = urlList[i]
-	# 	print(urlList[i])
-	url = urlList[0]
-	html = getHTMLText(url)
-	soup = BeautifulSoup(html, "html.parser")
-	fillUnivList(soup)
-	printUnivList()
-
+	for i in range(5):
+		url = urlList[i]
+		# print(urlList[i])
+	# url = urlList[0]
+		print(url)
+		html = getHTMLText(url)
+		soup = BeautifulSoup(html, "html.parser")
+		fillUnivList(soup)
+		# printUnivList()
+		outputUnivList()
 
 main()
