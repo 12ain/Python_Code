@@ -23,7 +23,7 @@ def getUrl():
     url3 = 'http://124.117.250.18/ptjh/y_jhqr/g_leftframe.php?yzdm=01&pcdm=5'  # 高职(专科)列表
     front = 'http://124.117.250.18/ptjh/y_jhqr/'
     urlList = []
-    urlText = getHTMLText(url2)  # 选择抓取的批次
+    urlText = getHTMLText(url1)  # 选择抓取的批次
     soupp = BeautifulSoup(urlText, "html.parser")
     for urldata in soupp.find_all('a'):
         urlList.append(front + urldata['href'])
@@ -56,6 +56,7 @@ def printUnivList():
     allUniv.pop(-1)
     allUniv.pop(0)
     allUniv.pop(0)
+    # print(allUniv)
     return allUniv
 # for i in range(len(allUniv)):
 # u = allUniv[i]
@@ -71,12 +72,13 @@ def outputUnivList():
             output.write(str(allUniv[i][j]))  # write函数不能写int类型的参数，所以使用str()转化
             output.write('\t')  # 相当于Tab一下，换一个单元格
         output.write('\n')  # 写完一行立马换行
+    output.write('\n')
     output.close()
 
 def main():
     urlList = getUrl()
-    # for i in range(len(urlList)):
-    for i in range(5):
+    for i in range(len(urlList)):
+    # for i in range(5):
         url = urlList[i]
         # print(urlList[i])
         # url = urlList[0]
@@ -86,5 +88,6 @@ def main():
         fillUnivList(soup)
         # printUnivList()
         outputUnivList()
+        allUniv.clear()
 
 main()
