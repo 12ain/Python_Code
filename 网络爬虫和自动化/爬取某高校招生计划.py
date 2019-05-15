@@ -23,11 +23,13 @@ def getUrl():
     url3 = 'http://124.117.250.18/ptjh/y_jhqr/g_leftframe.php?yzdm=01&pcdm=5'  # 高职(专科)列表
     front = 'http://124.117.250.18/ptjh/y_jhqr/'
     urlList = []
+    schoolList = []
     urlText = getHTMLText(url1)  # 选择抓取的批次
     soupp = BeautifulSoup(urlText, "html.parser")
     for urldata in soupp.find_all('a'):
         urlList.append(front + urldata['href'])
-    return urlList
+        schoolList.append(urldata.string)
+    return urlList, schoolList
 
 
 def fillUnivList(soup):
@@ -50,24 +52,14 @@ def fillUnivList(soup):
         allUniv.append(singleUniv)
 
 
-def printUnivList():
-    # print("{:^3}{:^10}{:^5}{:^8}{:^10}{:^12}{:^14}{:^16}".format('科类', '专业名称', '学制', '收费标准', '计划数', '计划性质及类别', '备注', '类别'))
+def outputUnivList(allUniv, schoolName):
     allUniv.pop(0)
     allUniv.pop(-1)
     allUniv.pop(0)
     allUniv.pop(0)
-    # print(allUniv)
-    return allUniv
-# for i in range(len(allUniv)):
-# u = allUniv[i]
-# print("{:^3}{:^10}{:^5}{:^8}{:^10}{:^12}{:^14}{:^16}".format(u[0], u[1], u[2], u[3], u[4], u[5], u[6], u[7]))
-
-
-def outputUnivList():
-    allUniv = printUnivList()
     output = open('data.xls', 'a', encoding='gbk')
-    # output.write('科类\t专业名称\t学制\t收费标准\t计划数\t计划性质及类别\t备注\t类别\n')
     for i in range(len(allUniv)):
+        allUniv[i].insert(0, schoolName)
         for j in range(len(allUniv[i])):
             output.write(str(allUniv[i][j]))  # write函数不能写int类型的参数，所以使用str()转化
             output.write('\t')  # 相当于Tab一下，换一个单元格
@@ -76,18 +68,17 @@ def outputUnivList():
     output.close()
 
 def main():
-    urlList = getUrl()
-    for i in range(len(urlList)):
-    # for i in range(5):
+    urlList, schoolList = getUrl()
+    # for i in range(len(urlList)):
+    for i in range(5):
         url = urlList[i]
-        # print(urlList[i])
-        # url = urlList[0]
-        print(url)
+        schoolName = schoolList[i]
+        # print(url)
+        print(schoolName)
         html = getHTMLText(url)
         soup = BeautifulSoup(html, "html.parser")
         fillUnivList(soup)
-        # printUnivList()
-        outputUnivList()
+        outputUnivList(allUniv, schoolName)
         allUniv.clear()
 
 main()
