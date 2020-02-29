@@ -57,9 +57,6 @@ def everyUrl():
     print(finalname)
     return finalurls, finalname
 
-
-
-
 def ProcessData():   # 对每页数据进行爬取并保存
     urls, finalname = everyUrl()
     for i in range(len(urls)):
